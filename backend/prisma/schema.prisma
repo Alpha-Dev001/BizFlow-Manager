@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+//Owner Schema 
+
+model User {
+  id String @id @default(cuid())
+  name String
+  phoneNumber String
+  email String @unique
+  password String
+  imgUrl String?
+  companyId String?
+  isVerified Boolean @default(false)
+  company Company? @relation(fields: [companyId], references: [id])
+  messages Message[]            
+  createdAt DateTime @default(now())
+}
+
+model Company {
+  id String @id @default(cuid())  
+  companyName String
+  user User[]
+  employee Employee[]
+  companyPhone String
+  companyEmail String @unique
+  departments Department[]
+  channels Channel[]
+  meetings Meeting[]
+  createdAt DateTime @default(now())
+}
+ 
+// Employee Schema
+
+model Employee {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  password String
+  phoneNumber String
+  salary Float?
+  pendingEmail String?
+  payroll Payroll[]
+  companyId String
+  company Company @relation(fields: [companyId], references: [id])
+  departmentId String?
+  department Department? @relation(fields: [departmentId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+//Payroll schema
+
+model Payroll {
+  id String @id @default(cuid())
+  employeeId String
+  employee Employee @relation(fields: [employeeId], references: [id])
+  amount Float
+  currency String?
+  status String? @default("Not Paid")
+  paymentDate DateTime
+  createdAt DateTime @default(now())
+}
+
+model Department {
+  id String @id @default(cuid())
+  name String
+  employees Employee[]
+  companyId String
+  company Company @relation(fields: [companyId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Channel {
+  id String @id @default(cuid())
+  name String
+  companyId String
+  company Company @relation(fields: [companyId], references: [id])
+  messages Message[]
+  createdAt DateTime @default(now())
+}
+
+
+model Message {
+  id String @id @default(cuid())
+  content String
+  channelId String
+  senderId String
+  channel Channel @relation(fields: [channelId], references: [id])
+  sender User @relation(fields: [senderId], references: [id])
+  meetingLink String?
+  createdAt DateTime @default(now())
+}
+
+model Meeting {
+  id String @id @default(cuid())
+  title String
+  link String
+  scheduledAt DateTime
+  departmentId String?
+  companyId String
+  company  Company  @relation(fields: [companyId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id String @id @default(cuid())
+  userId String
+  message String
+  type NotificationType
+  isRead Boolean @default(false)
+  createAt DateTime @default(now())
+}
+
+enum NotificationType {
+  MEETING
+  MESSAGE
+  PAYMENT
+  GENERAL
+}
