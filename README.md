@@ -1,4 +1,4 @@
-# Brooks Bridge - HR & Business Management Platform
+# HR & Business Management Platform
 
 A modern, full-stack HR and business management platform built with Nest.js and TypeScript. Brooks Bridge streamlines business operations with comprehensive employee management, payroll processing, and departmental organization.
 
