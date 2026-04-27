@@ -227,12 +227,6 @@ The project uses TypeScript with strict mode enabled. Key configurations:
 - **Strict Mode**: Enabled
 - **Path Aliases**: Configured for clean imports
 
-### Tailwind CSS Configuration
-Custom theme with role-based color schemes:
-- **Admin**: Purple color palette
-- **Teacher**: Teal color palette  
-- **Student**: Indigo color palette
-
 ## 🎯 Key Features
 
 ### Authentication System
