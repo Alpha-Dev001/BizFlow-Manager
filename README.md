@@ -30,7 +30,6 @@ A modern, full-stack HR and business management platform built with Nest.js and 
 - **Chart.js** - Data visualization
 
 ### Backend
-- **Node.js** - JavaScript runtime
 - **NestJS** - Progressive Node.js framework
 - **TypeScript** - Type-safe backend development
 - **Express.js** - Web framework (underlying NestJS)
